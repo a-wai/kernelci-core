@@ -985,6 +985,17 @@ test_configs:
     filters: *collabora-chromeos-kernel-filter
     test_plans: *chromebook-arm64-test-plans
 
+  - device_type: mt8192-asurada-spherion-r0_chromeos
+    filters: *collabora-chromeos-kernel-filter
+    test_plans:
+      - cros-tast-mm-decode-v4l2-stateless-h264
+      - cros-tast-mm-decode-v4l2-stateless-vp8
+      - cros-tast-mm-decode-v4l2-stateless-vp9-group1
+      - cros-tast-mm-decode-v4l2-stateless-vp9-group2
+      - cros-tast-mm-decode-v4l2-stateless-vp9-group3
+      - cros-tast-mm-decode-v4l2-stateless-vp9-group4
+
+
 # Test plans temporarily disabled as QEMU build doesnt work
 #  - device_type: qemu_x86_64-uefi-chromeos
 #    test_plans:
