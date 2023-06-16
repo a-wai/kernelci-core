@@ -52,7 +52,7 @@ MAKE_TARGETS = {
     'i386': 'bzImage',
     'x86_64': 'bzImage',
     'mips': 'uImage.gz',
-    'sparc': 'zImage',
+    'sparc': 'vmlinux',
 }
 
 # Hard-coded binary kernel image names for each CPU architecture
