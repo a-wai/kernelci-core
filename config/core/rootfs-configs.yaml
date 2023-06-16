@@ -139,6 +139,8 @@ rootfs_configs:
       - libp11-kit0
       - libunistring2
       - sensible-utils
+    extra_firmware:
+      - mediatek/mt8192/scp.img
     script: "scripts/bullseye-gst-fluster.sh"
     test_overlay: "overlays/fluster"
 
