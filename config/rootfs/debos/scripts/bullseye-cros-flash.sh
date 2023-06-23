@@ -22,7 +22,7 @@ cd /tmp/tests
 wget --no-verbose --inet4-only --no-clobber --tries 5 \
     https://chromium.googlesource.com/chromiumos/platform/ec/+archive/refs/heads/cr50_stab.tar.gz
 
-tar -xzf cr50_stab.tar.gz
+tar -xzfm cr50_stab.tar.gz
 cd extra/usb_updater
 make
 cp gsctool /usr/bin
