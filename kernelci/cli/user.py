@@ -8,7 +8,7 @@
 import getpass
 
 from .base import Args, sub_main
-from .base_api import APICommand
+from .base_api import APICommand, AttributesCommand
 
 
 class cmd_whoami(APICommand):  # pylint: disable=invalid-name
@@ -46,6 +46,43 @@ class cmd_password_hash(APICommand):  # pylint: disable=invalid-name
     def _api_call(self, api, configs, args):
         password = getpass.getpass()
         print(api.password_hash(password))
+        return True
+
+
+class cmd_get_group(APICommand):  # pylint: disable=invalid-name
+    """Get a user group with a given ID"""
+    args = APICommand.args + [Args.group_id]
+    opt_args = APICommand.opt_args + [Args.indent]
+
+    def _api_call(self, api, configs, args):
+        group = api.get_group(args.group_id)
+        self._print_json(group, args.indent)
+        return True
+
+
+class cmd_find_groups(AttributesCommand):  # pylint: disable=invalid-name
+    """Find user groups with arbitrary attributes"""
+    opt_args = AttributesCommand.opt_args + [
+        {
+            'name': '--limit',
+            'type': int,
+            'help': """\
+Maximum number of groups to retrieve. When set to 0, no limit is used and all
+the matching groups are retrieved.\
+""",
+            'default': 10,
+        },
+        {
+            'name': '--offset',
+            'type': int,
+            'help': "Offset when paginating results with a number of groups",
+        },
+    ]
+
+    def _api_call(self, api, configs, args):
+        attributes = self._split_attributes(args.attributes)
+        nodes = api.get_groups(attributes, args.offset, args.limit)
+        self._print_json(nodes, args.indent)
         return True
 
 
