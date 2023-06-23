@@ -3423,6 +3423,7 @@ test_configs:
       - kselftest-capabilities
       - kselftest-cpufreq
       - kselftest-kvm
+      - kselftest-landlock
       - kselftest-rseq
       - kselftest-sigaltstack
       - kselftest-timers
