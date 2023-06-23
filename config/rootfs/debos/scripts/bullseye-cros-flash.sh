@@ -20,9 +20,9 @@ apt-get install --no-install-recommends -y  ${BUILD_DEPS}
 mkdir -p /tmp/tests
 cd /tmp/tests
 wget --no-verbose --inet4-only --no-clobber --tries 5 \
-    https://chromium.googlesource.com/chromiumos/platform/ec/+archive/refs/heads/cr50_stab.tar.gz
+    https://chromium.googlesource.com/chromiumos/platform/ec/+archive/refs/heads/main.tar.gz
 
-tar -xzf cr50_stab.tar.gz
+tar -xzfm main.tar.gz
 cd extra/usb_updater
 make
 cp gsctool /usr/bin
