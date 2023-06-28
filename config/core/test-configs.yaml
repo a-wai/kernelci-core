@@ -682,8 +682,7 @@ test_plans:
       decoders:
         - 'GStreamer-AV1-V4L2SL-Gst1.0'
       videodec_parallel_jobs: '1'
-    filters:
-      - regex: {'tree': '(next|mainline|media)'}
+      videodec_timeout: 90
 
   v4l2-decoder-conformance-h264:
     rootfs: debian_bullseye-gst-fluster_nfs
@@ -695,8 +694,7 @@ test_plans:
         - 'GStreamer-H.264-V4L2-Gst1.0'
         - 'GStreamer-H.264-V4L2SL-Gst1.0'
       videodec_parallel_jobs: '1'
-    filters:
-      - regex: {'tree': '(next|mainline|media)'}
+      videodec_timeout: 90
 
   v4l2-decoder-conformance-h265:
     rootfs: debian_bullseye-gst-fluster_nfs
@@ -708,8 +706,7 @@ test_plans:
         - 'GStreamer-H.265-V4L2-Gst1.0'
         - 'GStreamer-H.265-V4L2SL-Gst1.0'
       videodec_parallel_jobs: '1'
-    filters:
-      - regex: {'tree': '(next|mainline|media)'}
+      videodec_timeout: 90
 
   v4l2-decoder-conformance-vp8:
     rootfs: debian_bullseye-gst-fluster_nfs
@@ -721,8 +718,7 @@ test_plans:
         - 'GStreamer-VP8-V4L2-Gst1.0'
         - 'GStreamer-VP8-V4L2SL-Gst1.0'
       videodec_parallel_jobs: '1'
-    filters:
-      - regex: {'tree': '(next|mainline|media)'}
+      videodec_timeout: 90
 
   v4l2-decoder-conformance-vp9:
     rootfs: debian_bullseye-gst-fluster_nfs
@@ -733,8 +729,7 @@ test_plans:
       decoders:
         - 'GStreamer-VP9-V4L2SL-Gst1.0'
       videodec_parallel_jobs: '1'
-    filters:
-      - regex: {'tree': '(next|mainline|media)'}
+      videodec_timeout: 90
 
   vdso:
     rootfs: debian_bullseye-vdso_nfs
@@ -1992,8 +1987,6 @@ device_types:
     class: arm64-dtb
     boot_method: depthcharge
     filters: *arm64-chromebook-filters
-    params:
-      videodec_timeout: 90
 
   rk3399-puma-haikou:
     mach: rockchip
@@ -3374,8 +3367,9 @@ test_configs:
       - v4l2-decoder-conformance-h264
       - v4l2-decoder-conformance-vp8
       - v4l2-decoder-conformance-vp9
-    filters:
+    filters: &chromebook-decoders-filter
       - passlist: {defconfig: ['videodec']}
+      - regex: {'tree': '(next|mainline|media)'}
 
   - device_type: rk3399-puma-haikou
     test_plans:
