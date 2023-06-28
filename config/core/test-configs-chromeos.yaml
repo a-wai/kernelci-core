@@ -480,6 +480,7 @@ test_plans:
       <<: *cros-tast-base-params
       tests: &cros-tast-video-tests >
         video.ChromeStackDecoder.*
+        video.ChromeStackDecoderVerification.*
 
   cros-tast-video-fixed:
     <<: *cros-tast-video
@@ -994,6 +995,7 @@ test_configs:
       - cros-tast-mm-decode-v4l2-stateless-vp9-group2
       - cros-tast-mm-decode-v4l2-stateless-vp9-group3
       - cros-tast-mm-decode-v4l2-stateless-vp9-group4
+      - cros-tast-video
 
 
 # Test plans temporarily disabled as QEMU build doesnt work
