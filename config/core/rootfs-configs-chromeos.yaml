@@ -32,6 +32,8 @@ rootfs_configs:
     serial: ttyS0
     arch_list:
       - arm64
+    extra_firmware:
+      - mediatek/mt8192/scp.img
 
   chromiumos-cherry:
     rootfs_type: chromiumos
