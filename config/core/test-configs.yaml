@@ -313,6 +313,12 @@ test_plans:
       kselftest_collections: "filesystems"
     filters: *kselftest_no_fragment
 
+  kselftest-ftrace:
+    <<: *kselftest
+    params:
+      job_timeout: '40'
+      kselftest_collections: "ftrace"
+
   kselftest-futex:
     <<: *kselftest
     params:
@@ -2837,6 +2843,7 @@ test_configs:
       - baseline
       - baseline-nfs
       - kselftest-cpufreq
+      - kselftest-ftrace
       - ltp-crypto
       # ltp-mm - runs system out of memory
       - smc
