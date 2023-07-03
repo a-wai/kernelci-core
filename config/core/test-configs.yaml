@@ -2841,6 +2841,8 @@ test_configs:
   - device_type: imx8mp-evk
     test_plans:
       - baseline
+      - baseline-nfs
+      - kselftest-alsa
 
   - device_type: imx8mq-zii-ultra-zest
     test_plans:
