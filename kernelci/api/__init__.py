@@ -125,6 +125,21 @@ class API(abc.ABC):
     def update_node(self, node: dict) -> dict:
         """Update an existing node object (with id)"""
 
+    # -----------
+    # User groups
+    # -----------
+
+    @abc.abstractmethod
+    def get_group(self, group_id: str) -> dict:
+        """Get the user group matching the given group id"""
+
+    @abc.abstractmethod
+    def get_groups(
+        self, attributes: dict,
+        offset: Optional[int] = None, limit: Optional[int] = None
+    ) -> Sequence[dict]:
+        """Get user groups that match the provided attributes"""
+
     # -------------------------------------------------------------------------
     # Private methods
     #
