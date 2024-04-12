@@ -25,6 +25,7 @@ import json
 import pwd
 
 FAILED_RUN_FILE = "failed_run"
+FULL_TXT_FILE = "full.txt"
 STDERR_FILE = "stderr.log"
 RESULTS_DIR = "/tmp/results"
 RESULTS_CHART_FILE = "results-chart.json"
@@ -153,6 +154,11 @@ def parse_test_results():
             print("### END STDERR DUMP ###")
             if "'/usr/local/bin/local_test_runner': No such file or directory" in stderr:
                 report_lava_critical("cros-partition-corrupt")
+                sys.exit(1)
+        fulltxt_file = os.path.join(RESULTS_DIR, FULL_TXT_FILE)
+        with open(fulltxt_file, "r") as f:
+            if 'runtime error: index out of range [1] with length 1' in f.read():
+                report_lava_critical("cros-out-of-range-index")
                 sys.exit(1)
     json_file = os.path.join(RESULTS_DIR, RESULTS_FILE)
     with open(json_file, "r") as results_file:
