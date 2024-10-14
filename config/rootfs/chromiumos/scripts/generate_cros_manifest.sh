@@ -49,7 +49,7 @@ git config --global color.ui false
 echo "Installing dependencies"
 sudo apt install -y less
 echo "Initializing repo"
-repo init --repo-url https://chromium.googlesource.com/external/repo --manifest-url https://chromium.googlesource.com/chromiumos/manifest --manifest-name default.xml --manifest-branch ${BRANCH}
+repo init --repo-url https://chromium.googlesource.com/external/repo --manifest-url https://chromium.googlesource.com/chromiumos/manifest --manifest-name default.xml --manifest-branch ${BRANCH} --groups default,bluetooth
 echo "Syncing repo"
 repo sync -j$(nproc)
 echo "Generating manifest"
