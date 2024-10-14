@@ -111,10 +111,10 @@ source "${SCRIPTPATH}/fixes/packagefix-${BRANCH}.sh"
 echo "Building packages (${SERIAL})"
 # Disable `builtin_fw_mali_g57` flag as it is not required when `panfrost` is enabled
 cros_sdk USE="tty_console_${SERIAL} pcserial cr50_skip_update -builtin_fw_mali_g57 gstreamer" \
-	 build_packages --board=${BOARD}
+	 cros build-packages --board=${BOARD}
 
 echo "Building image (${SERIAL})"
-cros_sdk build_image --enable_serial ${SERIAL} --board="${BOARD}" --boot_args "earlyprintk=serial,keep console=tty0" --noenable_rootfs_verification test
+cros_sdk cros build-image --enable-serial ${SERIAL} --board="${BOARD}" --boot-args "earlyprintk=serial,keep console=tty0" --no-enable-rootfs-verification test
 
 echo "Creating artifacts dir and copy generated image"
 sudo mkdir -p "${DATA_DIR}/${BOARD}"
