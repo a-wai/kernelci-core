@@ -3,12 +3,24 @@
     timeout:
       minutes: {{ job_timeout|default(15) }}
     definitions:
-       - repository: https://github.com/kernelci/test-definitions
-         from: git
-         revision: kernelci.org
-         path: automated/linux/ltp/ltp.yaml
-         name: {{ node.name }}
-         parameters:
-            TST_CMDFILES: "{{ tst_cmdfiles|default('') }}"
-            SKIP_INSTALL: "{{ skip_install }}"
-            SKIPFILE: {{ skipfile }}
+    - from: inline
+      name: reset-gcov
+      path: inline/reset-gcov.yaml
+      repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: reset-gcov
+          description: Reset GCOV data
+        run:
+          steps:
+          - GCOV_RESET="/sys/kernel/debug/gcov/reset"
+          - if [ -f ${GCOV_RESET} ]; then echo 1 > ${GCOV_RESET}; fi
+    - repository: https://github.com/kernelci/test-definitions
+      from: git
+      revision: kernelci.org
+      path: automated/linux/ltp/ltp.yaml
+      name: {{ node.name }}
+      parameters:
+        TST_CMDFILES: "{{ tst_cmdfiles|default('') }}"
+        SKIP_INSTALL: "{{ skip_install }}"
+        SKIPFILE: {{ skipfile }}
