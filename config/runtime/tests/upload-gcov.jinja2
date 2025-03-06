@@ -1,0 +1,33 @@
+{# This script packs and uploads GCOV artifacts -#}
+    - from: inline
+      name: upload
+      path: inline/upload.yaml
+      repository:
+        metadata:
+          description: GCOV artifacts upload
+          format: Lava-Test Test Definition 1.0
+          name: upload
+          environment:
+            - lava-test-shell
+          os:
+          - debian
+        run:
+          steps:
+          - TEMPDIR=$(mktemp -d)
+          - GCDA=/sys/kernel/debug/gcov
+          - find $GCDA -type d -exec mkdir -p $TEMPDIR/\{\} \;
+          - find $GCDA -name '*.gcda' -exec sh -c 'cat < $0 > '$TEMPDIR'/$0' {} \;
+          - find $GCDA -name '*.gcno' -exec sh -c 'cp -d $0 '$TEMPDIR'/$0' {} \;
+          - tar czf gcov-results.tar.gz -C $TEMPDIR sys
+          - rm -rf $TEMPDIR
+          # Needed to ensure we don't leak secrets in the logs
+          - set +x
+          - . /lava-${LAVA_JOB_ID}/secrets
+          # Should curl be part of our default rootfs?
+          - apt-get -q update
+          - apt-get -q install -y curl
+          # We need to use multiline to workaround YAML parsing issues (e.g. ':' followed by a space)
+          - >-
+            curl -X POST {{ storage.kernelci.url|default('http://mon.kernelci.org:3000/upload') }} -H "Authorization: Bearer ${UPLOAD_TOKEN}"
+            -F "file0=@gcov-results.tar.gz"
+            -F "path=/{{ node.name }}-{{ node.id }}"
